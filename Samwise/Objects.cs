@@ -10,7 +10,7 @@ namespace Samwise
 {
     public static class ExMthds
     {
-        private static string cString = System.Configuration.ConfigurationManager.ConnectionStrings["Samwise.Properties.Settings.SamwiseConnectionString"].ConnectionString;
+        private static readonly string cString = System.Configuration.ConfigurationManager.ConnectionStrings["Samwise.Properties.Settings.SamwiseConnectionString"].ConnectionString;
         public static void Insert(this League league)
         {
             try
@@ -70,10 +70,7 @@ namespace Samwise
                         var league = frmMain.LeaguesList.FirstOrDefault(x=> x.Name == match.League);
                         if (league == null)
                         {
-                            var newLeague = new League();
-                            newLeague.Id = 0;
-                            newLeague.Name = match.League;
-                            newLeague.Country = "NoCountry";
+                            var newLeague = new League {Id = frmMain.LeaguesList.Max(x => x.Id) + 1, Name = match.League, Country = "NoCountry"};
                             newLeague.Insert();
                             league = newLeague;
                         }
@@ -81,7 +78,7 @@ namespace Samwise
                         command.Parameters.Add("@home_id", SqlDbType.BigInt).Value = match.HomeTeam_Id;
                         command.Parameters.Add("@away_id", SqlDbType.BigInt).Value = match.AwayTeam_Id;
                         command.Parameters.Add("@startdate", SqlDbType.DateTime).Value = match.Date;
-                        command.Parameters.Add("@status", SqlDbType.VarChar, 50).Value = match.Time != null ? match.Time : "NoStatus";
+                        command.Parameters.Add("@status", SqlDbType.VarChar, 50).Value = match.Time ?? "NoStatus";
                         command.Parameters.Add("@Feed_Id", SqlDbType.BigInt).Value = match.FixtureMatch_Id;
                         conn.Open();
                         command.ExecuteNonQuery();
@@ -94,7 +91,7 @@ namespace Samwise
             }
         }
 
-        public static void FillLeagueList(this List<League> ListLeague)
+        public static void FillLeagueList(this List<League> listLeague)
         {
             try
             {
@@ -107,11 +104,13 @@ namespace Samwise
                         var reader = command.ExecuteReader();
                         while (reader.Read())
                         {
-                            var league = new League();
-                            league.Id = Convert.ToInt32(reader["Id"]);
-                            league.Name = reader["Name"].ToString();
-                            league.Country = reader["Country"].ToString();
-                            ListLeague.Add(league);
+                            var league = new League
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Name = reader["Name"].ToString(),
+                                Country = reader["Country"].ToString()
+                            };
+                            listLeague.Add(league);
                         }
                     }
                 }
@@ -126,7 +125,7 @@ namespace Samwise
         {
             value = value.ToLower();
 
-            char[] array = value.ToCharArray();
+            var array = value.ToCharArray();
 
             if (array.Length >= 1)
             {

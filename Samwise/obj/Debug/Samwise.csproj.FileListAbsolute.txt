@@ -10,3 +10,12 @@ C:\Users\andi\documents\visual studio 2015\Projects\Samwise\Samwise\obj\Debug\Sa
 C:\Users\andi\Source\Repos\Samwise\Samwise\bin\Debug\Samwise.exe.config
 C:\Users\andi\Source\Repos\Samwise\Samwise\obj\Debug\Samwise.exe
 C:\Users\andi\Source\Repos\Samwise\Samwise\obj\Debug\Samwise.pdb
+C:\Users\Noel\Source\Repos\Samwise\Samwise\bin\Debug\Samwise.exe.config
+C:\Users\Noel\Source\Repos\Samwise\Samwise\obj\Debug\Samwise.exe
+C:\Users\Noel\Source\Repos\Samwise\Samwise\obj\Debug\Samwise.pdb
+C:\Users\Noel\Source\Repos\Samwise\Samwise\bin\Debug\Samwise.exe
+C:\Users\Noel\Source\Repos\Samwise\Samwise\bin\Debug\Samwise.pdb
+C:\Users\Noel\Source\Repos\Samwise\Samwise\obj\Debug\Samwise.csprojResolveAssemblyReference.cache
+C:\Users\Noel\Source\Repos\Samwise\Samwise\obj\Debug\Samwise.frmMain.resources
+C:\Users\Noel\Source\Repos\Samwise\Samwise\obj\Debug\Samwise.Properties.Resources.resources
+C:\Users\Noel\Source\Repos\Samwise\Samwise\obj\Debug\Samwise.csproj.GenerateResource.Cache

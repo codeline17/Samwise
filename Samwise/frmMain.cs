@@ -16,6 +16,7 @@ namespace Samwise
 
         public frmMain()
         {
+            DoTheTwist();
             InitializeComponent();
             mainTmr.Interval = Convert.ToInt32(new TimeSpan(1, 10, 0).TotalMilliseconds);
             mainTmr.Start();
@@ -23,7 +24,6 @@ namespace Samwise
 
         private static void DoTheTwist()
         {
-            
             GetLeagues();
             LeaguesList.FillLeagueList();
             GetTeams();
