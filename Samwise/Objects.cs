@@ -48,7 +48,8 @@ namespace Samwise
                         command.Parameters.Add("@Country", SqlDbType.VarChar, 100).Value = team.Country.UppercaseWords();
                         command.Parameters.Add("@Stadium", SqlDbType.VarChar, 100).Value = team.Stadium != null ? team.Stadium.UppercaseWords() : "" ;
                         conn.Open();
-                        command.ExecuteNonQuery();
+                        var r =  command.ExecuteScalar();
+                        frmMai
                     }
                 }
             }
@@ -90,6 +91,29 @@ namespace Samwise
                 Debug.Print("Exeption " + ex.Message);
             }
         }
+        public static void Update(this Match match)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(cString))
+                {
+                    using (var command = new SqlCommand("FixtureUpdateOnLiveScore", conn))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add("@FixtureId", SqlDbType.BigInt).Value = match.FixtureMatch_Id;
+                        command.Parameters.Add("@HomeGoals", SqlDbType.BigInt).Value = match.HomeGoals;
+                        command.Parameters.Add("@AwayGoals", SqlDbType.BigInt).Value = match.AwayGoals;
+                        command.Parameters.Add("@Status", SqlDbType.VarChar, 50).Value = match.Time;
+                        conn.Open();
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.Print("Exeption " + ex.Message);
+            }
+        }
 
         public static void FillLeagueList(this List<League> listLeague)
         {
@@ -121,7 +145,7 @@ namespace Samwise
             }
         }
 
-        public static string UppercaseWords(this string value)
+        private static string UppercaseWords(this string value)
         {
             value = value.ToLower();
 

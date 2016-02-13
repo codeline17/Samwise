@@ -63,12 +63,21 @@ namespace Samwise
 
         public void WriteInTxtDebug(string text)
         {
-            if (txtDebug.Lines.Length > 50)
+            if (InvokeRequired)
             {
-                txtDebug.Text = "";
+                this.Invoke(
+                 new MethodInvoker(
+                 delegate () { WriteInTxtDebug(text); }));
             }
-
-            txtDebug.Text += Environment.NewLine + text;
+            else
+            {
+                if (txtDebug.Lines.Length > 50)
+                {
+                    txtDebug.Text = "";
+                }
+                txtDebug.Text += Environment.NewLine + text;
+            }
+            
         }
 
         private void mainTmr_Tick(object sender, EventArgs e)
