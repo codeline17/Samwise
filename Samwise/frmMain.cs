@@ -16,10 +16,17 @@ namespace Samwise
 
         public frmMain()
         {
-            DoTheTwist();
             InitializeComponent();
             mainTmr.Interval = Convert.ToInt32(new TimeSpan(1, 10, 0).TotalMilliseconds);
             mainTmr.Start();
+            tmrLiveScore.Interval = Convert.ToInt32(new TimeSpan(0, 1, 0).TotalMilliseconds);
+            tmrLiveScore.Tick += TmrLiveScore_Tick;
+            tmrLiveScore.Start();
+        }
+
+        private void TmrLiveScore_Tick(object sender, EventArgs e)
+        {
+            GetLiveScore();
         }
 
         private static void DoTheTwist()
@@ -58,7 +65,11 @@ namespace Samwise
 
         private static void GetLiveScore()
         {
-                     
+            var fixtures = requester.GetLiveScore();
+            foreach (Match match in fixtures)
+            {
+                match.Update();
+            }
         }
 
         public void WriteInTxtDebug(string text)

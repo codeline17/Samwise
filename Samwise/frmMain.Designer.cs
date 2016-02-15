@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.txtDebug = new System.Windows.Forms.TextBox();
             this.mainTmr = new System.Windows.Forms.Timer(this.components);
+            this.tmrLiveScore = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // txtDebug
@@ -68,6 +69,7 @@
 
         private System.Windows.Forms.TextBox txtDebug;
         private System.Windows.Forms.Timer mainTmr;
+        private System.Windows.Forms.Timer tmrLiveScore;
     }
 }
 

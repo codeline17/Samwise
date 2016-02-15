@@ -48,8 +48,7 @@ namespace Samwise
                         command.Parameters.Add("@Country", SqlDbType.VarChar, 100).Value = team.Country.UppercaseWords();
                         command.Parameters.Add("@Stadium", SqlDbType.VarChar, 100).Value = team.Stadium != null ? team.Stadium.UppercaseWords() : "" ;
                         conn.Open();
-                        var r =  command.ExecuteScalar();
-                        frmMai
+                        command.ExecuteNonQuery();
                     }
                 }
             }
