@@ -26,7 +26,16 @@ namespace Samwise
 
         private void TmrLiveScore_Tick(object sender, EventArgs e)
         {
-            GetLiveScore();
+            try
+            {
+                GetLiveScore();
+            }
+            catch (Exception ex)
+            {
+                WriteInTxtDebug("LiveScore Exception");
+                WriteInTxtDebug(ex.Message);
+                Thread.Sleep(60000);
+            }
         }
 
         private static void DoTheTwist()
@@ -39,7 +48,7 @@ namespace Samwise
         private static void GetLeagues()
         {
             var leagues = requester.GetAllLeagues();
-            foreach (League item in leagues)
+            foreach (var item in leagues)
             {
                 item.Insert();
             }
@@ -48,7 +57,7 @@ namespace Samwise
         private static void GetFixtures()
         {
             var fixtures = requester.GetFixturesByDateInterval(DateTime.Now,DateTime.Now.AddDays(10));
-            foreach (Match item in fixtures)
+            foreach (var item in fixtures)
             {
                 item.Insert();
             }
@@ -57,7 +66,7 @@ namespace Samwise
         private static void GetTeams()
         {
             var teams = requester.GetAllTeams();
-            foreach (Team item in teams)
+            foreach (var item in teams)
             {
                 item.Insert();
             }
@@ -66,7 +75,7 @@ namespace Samwise
         private static void GetLiveScore()
         {
             var fixtures = requester.GetLiveScore();
-            foreach (Match match in fixtures)
+            foreach (var match in fixtures)
             {
                 match.Update();
             }
@@ -74,21 +83,11 @@ namespace Samwise
 
         public void WriteInTxtDebug(string text)
         {
-            if (InvokeRequired)
+            if (txtDebug.Lines.Length > 50)
             {
-                this.Invoke(
-                 new MethodInvoker(
-                 delegate () { WriteInTxtDebug(text); }));
+                txtDebug.Text = "";
             }
-            else
-            {
-                if (txtDebug.Lines.Length > 50)
-                {
-                    txtDebug.Text = "";
-                }
-                txtDebug.Text += Environment.NewLine + text;
-            }
-            
+            txtDebug.Text += Environment.NewLine + text;
         }
 
         private void mainTmr_Tick(object sender, EventArgs e)
@@ -97,10 +96,11 @@ namespace Samwise
             {
                 DoTheTwist();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                mainTmr.Stop();
-                WriteInTxtDebug("Stopped nga DoTheTwistError");
+                WriteInTxtDebug("Main Timer Exception");
+                WriteInTxtDebug(ex.Message);
+                Thread.Sleep(60000);
             }
         }
     }

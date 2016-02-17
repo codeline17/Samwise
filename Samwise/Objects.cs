@@ -102,6 +102,10 @@ namespace Samwise
                         command.Parameters.Add("@FixtureId", SqlDbType.BigInt).Value = match.FixtureMatch_Id;
                         command.Parameters.Add("@HomeGoals", SqlDbType.BigInt).Value = match.HomeGoals;
                         command.Parameters.Add("@AwayGoals", SqlDbType.BigInt).Value = match.AwayGoals;
+                        command.Parameters.Add("@HomeYellow", SqlDbType.BigInt).Value = match.HomeTeamYellowCardDetails.Count() - 1;
+                        command.Parameters.Add("@AwayYellow", SqlDbType.BigInt).Value = match.AwayTeamYellowCardDetails.Count() - 1;
+                        command.Parameters.Add("@HomeRed", SqlDbType.BigInt).Value = match.HomeTeamRedCardDetails.Count() - 1;
+                        command.Parameters.Add("@AwayRed", SqlDbType.BigInt).Value = match.AwayTeamRedCardDetails.Count() - 1;
                         command.Parameters.Add("@Status", SqlDbType.VarChar, 50).Value = match.Time;
                         conn.Open();
                         command.ExecuteNonQuery();
